@@ -32,3 +32,41 @@
 **Next goals:**
 - Add unit tests for `fetch_jobs()`, `normalize_job()`, and `save_jobs()`
 - Add command-line support for dynamic search terms
+
+============================================================================================
+
+## 2025-07-06
+
+**What I did today:**
+- Set up `pytest` and added test support for:
+  - `Job` model conversion (`to_dict` and `from_dict`)
+  - `get_env_variable()` config loader with `monkeypatch`
+  - `normalize_job()` with all and missing fields
+  - `save_jobs()` with deduplication, sorting, and file I/O mocking
+  - `fetch_jobs()` from Adzuna using `responses` to mock HTTP
+- Achieved 100% test coverage on:
+  - `job.py`
+  - `config_loader.py`
+  - `file_saver.py`
+  - `job_normalizer.py`
+- Created `tests/` directory and used `conftest.py` for shared fixtures
+- Used `PYTHONPATH=.` trick to resolve `ModuleNotFoundError` on Windows
+- Tagged commit `v0.1.1` after finishing core logic
+
+**What I learned:**
+- How to write unit tests using `pytest`, `pytest-mock`, and `responses`
+- The difference between unit tests and integration tests
+- Mocking file reads/writes and HTTP requests for safe test isolation
+- Using coverage reports to find untested files
+- How to tag versions in Git using `git tag vX.Y.Z && git push origin --tags`
+
+**What issues I faced:**
+- `ModuleNotFoundError` when importing modules — fixed by adding `PYTHONPATH=.` in test runner
+- API keys not loading properly in test — fixed by `monkeypatch.setenv()`
+- Unexpected salary output due to logic in `normalize_job` — fixed by updating test expectations
+- Confusion between generic test structure vs. API-specific logic
+
+**Next goals:**
+- Add command-line argument support for search terms in `main.py`
+- Allow user to type `python main.py "python developer"` for custom queries
+- Start planning reusable API structure if more APIs are added later
